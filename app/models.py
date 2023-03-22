@@ -8,6 +8,7 @@ class SiteContent(models.Model):
     values_card_2 = models.TextField()
     about_developer = models.TextField()
     developer_img = models.ImageField(upload_to='developer/')
+    privacy_policies = models.TextField()
 
     def __str__(self):
         return 'Site Content'

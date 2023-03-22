@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     # Third apps
     'corsheaders',
     'rest_framework',
+    'cloudinary_storage',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -132,8 +134,18 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Allowed
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:30096',
+    'http://127.0.0.1:30353'
 ]
 
 # User
 AUTH_USER_MODEL = 'users.User'
+
+# Media
+MEDIA_URL = '/LEMBRAR-ME/'
+MEDIA_ROOT = BASE_DIR / 'LEMBRAR-ME'
+CLOUDINARY_STORAGE  = {
+    'CLOUD_NAME' : config('CLOUD_NAME'),
+    'API_KEY' : config('API_KEY'),
+    'API_SECRET' : config('API_SECRET')
+}
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'

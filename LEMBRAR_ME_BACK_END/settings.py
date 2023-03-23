@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary_storage',
     'cloudinary',
+    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -134,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Allowed
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:30353'
+    'http://127.0.0.1:34548'
 ]
 
 # User

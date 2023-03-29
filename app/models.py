@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth import get_user_model
+from model_utils.models import TimeStampedModel
 
 # Create your models here.
 class SiteContent(models.Model):
@@ -12,3 +14,17 @@ class SiteContent(models.Model):
 
     def __str__(self):
         return 'Site Content'
+
+
+class Annotation(TimeStampedModel):
+    user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
+    title = models.CharField(max_length=50, blank=False)
+    summary = models.CharField(max_length=150, blank=False)
+    text = models.TextField()
+
+    class Meta:
+        ordering = ('-modified',)
+
+    def __str__(self):
+        return self.title
+

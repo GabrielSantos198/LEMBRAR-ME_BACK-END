@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 from decouple import config
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -46,7 +47,6 @@ INSTALLED_APPS = [
     'rest_framework',
     'cloudinary_storage',
     'cloudinary',
-    'rest_framework_simplejwt',
 ]
 
 MIDDLEWARE = [
@@ -135,7 +135,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Allowed
 CORS_ALLOWED_ORIGINS = [
-    'http://127.0.0.1:34548'
+    'http://127.0.0.1:9000'
 ]
 
 # User
@@ -144,9 +144,22 @@ AUTH_USER_MODEL = 'users.User'
 # Media
 MEDIA_URL = '/LEMBRAR-ME/'
 MEDIA_ROOT = BASE_DIR / 'LEMBRAR-ME'
-CLOUDINARY_STORAGE  = {
-    'CLOUD_NAME' : config('CLOUD_NAME'),
-    'API_KEY' : config('API_KEY'),
-    'API_SECRET' : config('API_SECRET')
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': config('CLOUD_NAME'),
+    'API_KEY': config('API_KEY'),
+    'API_SECRET': config('API_SECRET')
 }
 DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
+
+# Rest Framework
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(minutes=15),
+    'ROTATE_REFRESH_TOKENS': True,
+}

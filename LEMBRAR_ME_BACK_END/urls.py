@@ -21,14 +21,16 @@ from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
 )
-from app.views import CreateUserView
+from app.views import CreateUserView, DeleteUserView, UpdatePasswordView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('app.urls')),
-    path('api/token/', TokenObtainPairView.as_view(), name="token_obtain_pair"),
-    path('api/token/refresh/', TokenRefreshView.as_view(), name="token_refresh"),
-    path('api/register/', CreateUserView.as_view(), name="create-user"),
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    path('api/register/', CreateUserView.as_view(), name='create-user'),
+    path('api/delete/account/', DeleteUserView.as_view(), name='delete-account'),
+    path('api/update/password/', UpdatePasswordView.as_view(), name='update-password'),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

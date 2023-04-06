@@ -1,17 +1,52 @@
 from django.shortcuts import render
-from rest_framework.generics import ListAPIView, CreateAPIView, DestroyAPIView, RetrieveAPIView, UpdateAPIView
-from . models import SiteContent, Annotation
-from . serializers import SiteContentSerializer, UserSerializer, AnnotationSerializers
+from django.db.models import Q
+from django.core.mail import send_mail
+from django.conf import settings
+
+from rest_framework.generics import (
+    ListAPIView, CreateAPIView, DestroyAPIView,
+    RetrieveAPIView, UpdateAPIView
+)
+from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
-from users.models import User
 from rest_framework.permissions import AllowAny, IsAuthenticated
+from django.contrib.auth.password_validation import validate_password
+from django.core.exceptions import ValidationError
+from rest_framework import serializers
 
-# Create your views here.
+from . models import SiteContent, Annotation, Subscribe
+from . serializers import SiteContentSerializer, UserSerializer, AnnotationSerializers, SubscribeSerializers
+from users.models import User
+
+
 class CreateUserView(CreateAPIView):
-    queryset = User.objects.all()
+    model = User
     permission_classes = (AllowAny,)
     serializer_class = UserSerializer
+
+
+class UpdatePasswordView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def put(self, request):
+        try:
+            validate_password(request.data['password'])
+        except ValidationError:
+            raise serializers.ValidationError({'password': 'weak password'})
+        user = User.objects.filter(username=self.request.user)[0]
+        user.set_password(request.data['password'])
+        user.save()
+        return Response(status=status.HTTP_200_OK)
+
+
+class DeleteUserView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def delete(self, request):
+        user = User.objects.filter(username=self.request.user)[0]
+        user.delete()
+        return Response(status=status.HTTP_202_ACCEPTED)
 
 
 class SiteContentView(ListAPIView):
@@ -23,7 +58,6 @@ class AnnotationListView(ListAPIView):
     serializer_class = AnnotationSerializers
     permission_classes = (IsAuthenticated,)
 
-
     def get_queryset(self):
         user = self.request.user
         queryset = Annotation.objects.filter(user=user)
@@ -33,7 +67,6 @@ class AnnotationListView(ListAPIView):
 class AnnotationDetailView(RetrieveAPIView):
     serializer_class = AnnotationSerializers
     permission_classes = (IsAuthenticated,)
-
 
     def get_queryset(self):
         user = self.request.user
@@ -56,7 +89,6 @@ class AnnotationCreateView(CreateAPIView):
 class AnnotationUpdateView(UpdateAPIView):
     permission_classes = (IsAuthenticated,)
 
-
     def put(self, request, pk):
         user = self.request.user
         request.data['user'] = user.id
@@ -75,4 +107,41 @@ class AnnotationDeleteView(DestroyAPIView):
         user = self.request.user
         queryset = Annotation.objects.filter(user=user)
         return queryset
+
+
+class AnnotationSearchView(ListAPIView):
+    permission_classes = (IsAuthenticated,)
+    serializer_class = AnnotationSerializers
+
+    def get_queryset(self):
+        query = self.request.GET.get('q')
+        user = self.request.user
+        annotations = Annotation.objects.filter(
+            Q(title__icontains=query) |
+            Q(summary__icontains=query) |
+            Q(text__icontains=query),
+            user=user
+        )
+        return annotations
+
+
+class SubscribeView(CreateAPIView):
+    model = Subscribe
+    serializer_class = SubscribeSerializers
+    permission_classes = (AllowAny,)
+
+
+class ContactView(APIView):
+
+    def post(self, request):
+        if request.data['name'] and request.data['email'] and request.data['message']:
+            send_mail(
+                subject = f'{request.data["name"]} te envio uma mensagem pela Lembrar-me',
+                message = f'E-mail: {request.data["email"]}\nMessage: {request.data["message"]}',
+                from_email = request.data['email'],
+                recipient_list = [settings.EMAIL_HOST_USER]
+            )
+            return Response(status=status.HTTP_202_ACCEPTED)
+        else:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
 

@@ -1,6 +1,8 @@
 from django.db import models
 from django.contrib.auth import get_user_model
 from model_utils.models import TimeStampedModel
+from django.core.mail import EmailMessage
+from django.conf import settings
 
 # Create your models here.
 class SiteContent(models.Model):
@@ -27,4 +29,33 @@ class Annotation(TimeStampedModel):
 
     def __str__(self):
         return self.title
+
+
+class Subscribe(TimeStampedModel):
+    email = models.EmailField()
+
+    def __str__(self):
+        return self.email
+
+
+class MessageToSubscribe(TimeStampedModel):
+    subject = models.CharField(max_length=50)
+    message = models.TextField()
+
+    def save(self):
+        if Subscribe.objects.all():
+            subscribes = Subscribe.objects.all()
+            email_group = []
+            for obj in subscribes:
+                email_group.append(obj.email)
+            email = EmailMessage(
+                subject=self.subject,
+                body=self.message,
+                bcc=email_group
+            )
+            email.send()
+        super().save()
+
+    def __str__(self):
+        return self.subject
 

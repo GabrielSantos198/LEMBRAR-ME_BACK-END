@@ -4,8 +4,8 @@ services:
   web:
     build: .
     ports:
-      - 9000:8000
+      - 8000:8000
     container_name: thunder-store
     volumes:
-      - .:LEMBRAR-ME/
+      - .:/LEMBRAR-ME/
 

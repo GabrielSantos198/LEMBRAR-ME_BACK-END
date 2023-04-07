@@ -4,7 +4,7 @@ from app import views
 urlpatterns = [
     path('', views.SiteContentView.as_view(), name='site-content'),
     path('annotations/', views.AnnotationListView.as_view(), name='annotations'),
-    path('search/annotations/', views.AnnotationSearchView.as_view(), name='search-annotations'),
+    path('annotations/search/', views.AnnotationSearchView.as_view(), name='search-annotations'),
     path('annotations/<int:pk>/', views.AnnotationDetailView.as_view(), name='annotation-detail'),
     path('annotations/update/<int:pk>/', views.AnnotationUpdateView.as_view(), name='update-annotation'),
     path('create/annotation/', views.AnnotationCreateView.as_view(), name='create-annotation'),

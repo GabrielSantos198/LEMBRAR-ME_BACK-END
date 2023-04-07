@@ -21,7 +21,7 @@ class SiteContent(models.Model):
 class Annotation(TimeStampedModel):
     user = models.ForeignKey(get_user_model(), on_delete=models.CASCADE)
     title = models.CharField(max_length=50, blank=False)
-    summary = models.CharField(max_length=150, blank=False)
+    summary = models.CharField(max_length=250, blank=False)
     text = models.TextField()
 
     class Meta:

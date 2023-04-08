@@ -135,7 +135,7 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Allowed
-CORS_ALLOWED_ORIGINS = ['https://gabrielsantos198.github.io',]
+CORS_ORIGIN_ALLOW_ALL = True
 
 # User
 AUTH_USER_MODEL = 'users.User'

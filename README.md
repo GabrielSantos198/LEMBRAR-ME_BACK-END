@@ -1,9 +1,4 @@
-<img src="https://img.shields.io/github/license/GabrielSantos198/LEMBRAR-ME_BACK-END?color=blue&style=for-the-badge" alt="">
-<img src="https://img.shields.io/github/repo-size/GabrielSantos198/LEMBRAR-ME_BACK-END?style=for-the-badge" alt="">
-<img src="https://img.shields.io/github/languages/count/GabrielSantos198/LEMBRAR-ME_BACK-END?style=for-the-badge" alt="">
-<img src="https://img.shields.io/github/issues/GabrielSantos198/LEMBRAR-ME_BACK-END?color=blue&style=for-the-badge" alt="">
-<img src="https://img.shields.io/github/issues-pr/GabrielSantos198/LEMBRAR-ME_BACK-END?color=blue&style=for-the-badge" alt="">
-<img src="https://img.shields.io/github/stars/GabrielSantos198/LEMBRAR-ME_BACK-END?color=blue&style=for-the-badge" alt="">
+<img src="https://img.shields.io/github/license/GabrielSantos198/LEMBRAR-ME_BACK-END?color=blue&style=for-the-badge" alt=""> <img src="https://img.shields.io/github/repo-size/GabrielSantos198/LEMBRAR-ME_BACK-END?style=for-the-badge" alt=""> <img src="https://img.shields.io/github/languages/count/GabrielSantos198/LEMBRAR-ME_BACK-END?style=for-the-badge" alt=""> <img src="https://img.shields.io/github/issues/GabrielSantos198/LEMBRAR-ME_BACK-END?color=blue&style=for-the-badge" alt=""> <img src="https://img.shields.io/github/issues-pr/GabrielSantos198/LEMBRAR-ME_BACK-END?color=blue&style=for-the-badge" alt=""> <img src="https://img.shields.io/github/stars/GabrielSantos198/LEMBRAR-ME_BACK-END?color=blue&style=for-the-badge" alt="">
 
 <p align="center">
 <img src="https://gabrielsantos198.github.io/LEMBRAR-ME_FRONT-END/imgs/computer.jpg" width=300px alt="">

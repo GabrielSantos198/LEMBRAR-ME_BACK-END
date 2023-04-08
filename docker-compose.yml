@@ -8,4 +8,11 @@ services:
     container_name: thunder-store
     volumes:
       - .:/LEMBRAR-ME/
-
+    environment:
+      - DEBUG=<value>
+      - SECRET_KEY=<value>
+      - CLOUD_NAME=<value>
+      - API_KEY=<value>
+      - API_SECRET=<value>
+      - EMAIL_HOST_USER=<value>
+      - EMAIL_HOST_PASSWORD=<value>

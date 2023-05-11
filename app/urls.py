@@ -11,5 +11,8 @@ urlpatterns = [
     path('delete/annotation/<int:pk>/', views.AnnotationDeleteView.as_view(), name='delete-annotation'),
     path('subscribe/', views.SubscribeView.as_view(), name='subscribe'),
     path('contact/', views.ContactView.as_view(), name='contact'),
+
+    path('auth/facebook/', views.FacebookLogin.as_view(), name='fb_login'),
+    path('auth/google/', views.GoogleLogin.as_view(), name='socialaccount_signup')
 ]
 

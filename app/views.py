@@ -16,28 +16,22 @@ from django.core.exceptions import ValidationError
 from rest_framework import serializers
 
 from . models import SiteContent, Annotation, Subscribe
-from . serializers import SiteContentSerializer, UserSerializer, AnnotationSerializers, SubscribeSerializers
+from . serializers import SiteContentSerializer, AnnotationSerializers, SubscribeSerializers
 from users.models import User
 
+from allauth.socialaccount.providers.oauth2.client import OAuth2Client
+from allauth.socialaccount.providers.facebook.views import FacebookOAuth2Adapter
+from allauth.socialaccount.providers.google.views import GoogleOAuth2Adapter
+from dj_rest_auth.registration.views import SocialLoginView
 
-class CreateUserView(CreateAPIView):
-    model = User
-    permission_classes = (AllowAny,)
-    serializer_class = UserSerializer
+class FacebookLogin(SocialLoginView):
+    adapter_class = FacebookOAuth2Adapter
 
 
-class UpdatePasswordView(APIView):
-    permission_classes = (IsAuthenticated,)
-
-    def put(self, request):
-        try:
-            validate_password(request.data['password'])
-        except ValidationError:
-            raise serializers.ValidationError({'password': 'weak password'})
-        user = User.objects.filter(username=self.request.user)[0]
-        user.set_password(request.data['password'])
-        user.save()
-        return Response(status=status.HTTP_200_OK)
+class GoogleLogin(SocialLoginView):
+    adapter_class = GoogleOAuth2Adapter
+    client_class = OAuth2Client
+    callback_url = 'https://gabrielsantos198.github.io/LEMBRAR-ME_FRONT-END'
 
 
 class DeleteUserView(APIView):
